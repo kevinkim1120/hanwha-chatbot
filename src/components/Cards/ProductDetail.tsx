@@ -1,4 +1,4 @@
-import { X, AlertTriangle, CheckCircle, Info } from 'lucide-react';
+import { AlertTriangle, CheckCircle, Info } from 'lucide-react';
 import type { Product } from '../../types';
 
 interface Props {

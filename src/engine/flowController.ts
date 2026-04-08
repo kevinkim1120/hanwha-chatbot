@@ -168,7 +168,6 @@ function tryCompare(text: string): FlowResult | null {
   // 3) 비교 의도는 있지만 상품이 1개 이하 → 비교 메뉴 안내
   if (hasCompareIntent(text)) {
     if (detected.length === 1) {
-      const p = products.find(pr => pr.code === detected[0].code);
       const sameCategoryProducts = products.filter(
         pr => pr.code !== detected[0].code
       );
