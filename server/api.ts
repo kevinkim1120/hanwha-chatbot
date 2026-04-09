@@ -30,17 +30,20 @@ export function apiPlugin(): Plugin {
   return {
     name: 'claude-api',
     configureServer(server) {
-      // Load .env manually for Vite server
-      const dotenvPath = resolve(process.cwd(), '.env');
-      try {
-        const envContent = readFileSync(dotenvPath, 'utf-8');
-        for (const line of envContent.split('\n')) {
-          const [key, ...valParts] = line.split('=');
-          if (key && valParts.length) {
-            process.env[key.trim()] = valParts.join('=').trim();
+      // Load .env and .env.local manually for Vite server
+      // .env.local overrides .env (loaded second)
+      for (const envFile of ['.env', '.env.local']) {
+        const dotenvPath = resolve(process.cwd(), envFile);
+        try {
+          const envContent = readFileSync(dotenvPath, 'utf-8');
+          for (const line of envContent.split('\n')) {
+            const [key, ...valParts] = line.split('=');
+            if (key && valParts.length) {
+              process.env[key.trim()] = valParts.join('=').trim();
+            }
           }
-        }
-      } catch {}
+        } catch {}
+      }
 
       init();
 
